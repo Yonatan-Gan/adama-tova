@@ -1,0 +1,173 @@
+/* RegistrationSuccessModal.module.css */
+
+/* Overlay backdrop */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: transparent;
+  z-index: 1999;
+}
+
+/* Background Circles Container */
+.circlesContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 3001;
+}
+
+/* Main Modal Container */
+.groupModalContainer {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  max-width: 100vw;
+  height: 100dvh;
+  background: linear-gradient(180deg, #e74e1c 0%, #de6930 53%, #e79267 87%);
+  z-index: 2000;
+  overflow-y: auto;
+  overflow-x: hidden;
+  direction: rtl;
+  margin: 0 auto;
+}
+
+/* Close Button (X) */
+.groupCloseButton {
+  position: absolute;
+  width: 2.5625rem;
+  height: 2.5rem;
+  right: 1.25rem;
+  top: 3.1875rem;
+  border: none;
+  background: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  z-index: 10;
+  padding: 0;
+  transition: transform var(--transition-normal);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.groupCloseButton:hover {
+  transform: scale(1.1);
+}
+
+.groupCloseButton:active {
+  transform: scale(0.95);
+}
+
+/* Anchor Frame (Zero Height Center) */
+.groupContentFrame {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 0px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+}
+
+/* =========================================================
+   ARROW CONTROL
+   ========================================================= */
+.checkmarkContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 7.635rem;
+  height: 7.75rem;
+  position: relative;
+  z-index: 3002;
+  /* Control Arrow Vertical Position */
+  transform: translateY(0.5rem);
+}
+
+.checkmarkIcon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 3.74rem;
+  height: 2.98rem;
+}
+
+/* =========================================================
+   TEXT CONTROL
+   ========================================================= */
+.textWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 24rem; /* Wide enough for long titles */
+
+  /* Control Text Vertical Position */
+  transform: translateY(10rem);
+}
+
+/* ⭐ 1. "REGISTERED SUCCESSFULLY" TITLE */
+.successTitle {
+  font-family: var(--font-secondary);
+  font-style: normal;
+
+  /* 👇 CHANGE FONT SIZE/WEIGHT HERE */
+  font-weight: var(--font-weight-semibold); /* Bold */
+  font-size: var(--font-size-xl); /* Bigger size */
+
+  text-align: center;
+  color: #ffffff;
+
+  direction: rtl;
+}
+
+/* ⭐ 2. ACTIVITY DETAILS (Name, Date, Time) */
+.successDetails {
+  font-family: var(--font-secondary);
+  font-style: normal;
+
+  /* 👇 CHANGE FONT SIZE/WEIGHT HERE */
+  font-weight: var(--font-weight-semibold); /* Regular */
+  font-size: var(--font-size-xl); /* Standard size */
+
+  line-height: 1.5rem;
+  text-align: center;
+  color: #ffffff;
+  margin: 0;
+  direction: rtl;
+}
+
+/* Waitlist Text (Fallback style) */
+.groupMessageText {
+  width: 100%;
+  font-family: var(--font-secondary);
+  font-style: normal;
+  font-weight: var(--font-weight-bold);
+  font-size: 1rem;
+  line-height: 1.5rem;
+  text-align: center;
+  color: #ffffff;
+  margin: 0;
+  direction: rtl;
+}
+
+.groupMessageTextLight {
+  font-weight: var(--font-weight-normal);
+}

@@ -1,0 +1,140 @@
+.cardContainer {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: var(--spacing-lg);
+  width: 100%;
+  max-width: 21.5625rem;
+  min-height: 6rem;
+  height: auto;
+  background: var(--button-bg-light);
+  border-radius: var(--radius-sm);
+  direction: rtl;
+  position: relative;
+}
+
+.contentStack {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+  height: 100%;
+  gap: var(--spacing-md);
+}
+
+.textGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-md);
+  width: 70%;
+  flex-shrink: 0;
+}
+
+.titleText {
+  font-family: var(--font-secondary);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-xl);
+  line-height: 1.25rem;
+  color: var(--color-bordo);
+  margin: 0;
+  text-align: right;
+  width: 100%;
+  word-wrap: break-word;
+}
+
+.detailsGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  width: 100%;
+}
+
+.instructorText,
+.dateTimeText {
+  font-family: var(--font-secondary);
+  font-weight: var(--font-weight-normal);
+  font-size: var(--font-size-md);
+  line-height: 1.125rem;
+  color: var(--color-bordo);
+  margin: 0;
+  text-align: right;
+  width: 100%;
+  word-wrap: break-word;
+}
+
+/* Participants status text for admin */
+.participantsText {
+  font-family: var(--font-secondary);
+  font-weight: var(--font-weight-normal);
+  font-size: var(--font-size-md);
+  line-height: 1.125rem;
+  color: var(--color-bordo);
+  margin: 0;
+  text-align: right;
+  width: 100%;
+  word-wrap: break-word;
+}
+
+/* Full status with waiting list - orange color */
+.participantsFullText {
+  color: var(--color-orange-main);
+}
+
+/* ⭐ Action wrapper for regular users (with clock icon positioning) */
+.actionWrapper {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+  margin-top: auto;
+  flex-shrink: 0;
+  top: 0.1rem;
+  width: auto;
+}
+
+/* ⭐ NEW: Action wrapper for admin (adjust position for longer text) */
+.actionWrapperAdmin {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+  margin-top: auto;
+  flex-shrink: 0;
+  /* ⭐ Adjust these values to control admin button position */
+  top: var(--spacing-xs); /* Remove the 0.1rem offset */
+  margin-bottom: 0.25rem; /* Add some bottom margin if needed */
+  width: auto;
+  left: var(--spacing-2xl);
+}
+
+/* Clock icon styles */
+.clockIconWrapper {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  flex-shrink: 0;
+  z-index: 1;
+}
+
+.clockIconRegister {
+  left: 5.5rem;
+  bottom: 0;
+  margin-bottom: -0.5rem;
+}
+
+.clockIconCancel {
+  left: 4.5rem;
+  bottom: 0;
+  margin-bottom: -0.5rem;
+}
+
+.clockIcon {
+  width: 2.25rem;
+  height: 2.25rem;
+}

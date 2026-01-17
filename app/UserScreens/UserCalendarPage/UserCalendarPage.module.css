@@ -1,0 +1,142 @@
+/* UserCalendarPage.module.css */
+
+.pageContainer {
+  width: 100%;
+  max-width: var(--container-max-width);
+  /* --- CHANGED: Scroll logic moved here --- */
+  /* Fix height to viewport minus Bottom Nav (4.5rem) */
+  height: calc(100dvh - 4.5rem);
+  z-index: var(--z-index-page);
+
+  /* Enable scrolling on the page itself */
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch; /* Smooth scroll on iOS */
+
+  margin: 0 auto;
+  position: relative;
+  direction: rtl;
+
+  padding: var(--spacing-xl);
+  /* Add safe area logic to bottom padding */
+  padding-bottom: calc(var(--spacing-xl) + env(safe-area-inset-bottom));
+}
+
+.mainFrame {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Centered Title Container */
+.titleContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: var(--spacing-4xl);
+  margin-bottom: var(--spacing-3xl);
+  overflow-x: hidden;
+  flex-shrink: 0;
+}
+
+.titleText {
+  font-family: var(--font-primary);
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-normal);
+  line-height: 2.8125rem;
+  color: var(--color-text-primary);
+  margin: 0;
+  text-align: center;
+}
+
+.sliderSection {
+  width: 100%;
+  height: 3.6875rem;
+  margin-bottom: var(--spacing-3xl);
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Centered Filter Container */
+.filterSection {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-bottom: var(--spacing-md);
+  overflow-x: hidden;
+  flex-shrink: 0;
+  pointer-events: auto;
+}
+
+/* Content Container */
+.contentContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  /* Removed overflow: hidden so it grows naturally */
+  overflow: visible;
+}
+
+/* Activities List - GROWS NATURALLY */
+.activitiesList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+
+  /* --- CHANGED: Removed max-height and overflow --- */
+  /* The container now handles the scrolling */
+  width: 100%;
+  padding: 0.5rem;
+  padding-right: var(--spacing-xs);
+  padding-bottom: var(--spacing-xs);
+}
+
+/* Individual Activity Item - Prevent shrinking */
+.activityItem {
+  width: 100%;
+  min-height: fit-content;
+  flex-shrink: 0;
+  overflow: visible;
+  transition: none;
+}
+
+/* Loading Overlay */
+.loadingOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(231, 78, 28, 0.2);
+  pointer-events: none;
+}
+
+.emptyText {
+  font-family: var(--font-secondary);
+  font-weight: var(--font-weight-normal);
+  font-size: var(--font-size-base);
+  line-height: 1.25rem;
+  text-align: center;
+  color: var(--color-text-primary);
+  margin-top: var(--spacing-3xl);
+}
+
+/* --- RESPONSIVENESS --- */
+@media (max-height: 43.75rem) {
+  .titleText {
+    font-size: 1.75rem;
+  }
+
+  .sliderSection {
+    margin-bottom: var(--spacing-2xl);
+  }
+
+  /* Removed .activitiesList max-height override since it's no longer used */
+}

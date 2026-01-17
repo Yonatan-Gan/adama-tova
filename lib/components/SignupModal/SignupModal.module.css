@@ -1,0 +1,150 @@
+/* SignupModal.module.css */
+
+/* Overlay backdrop - Semi-transparent */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1999;
+}
+
+/* Modal container - Full screen with gradient background */
+.modalContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100dvh;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem 2.3125rem;
+  padding-top: calc(1.5rem + env(safe-area-inset-top, 0));
+  padding-bottom: calc(1.5rem + env(safe-area-inset-bottom, 0));
+
+  background: var(--color-background);
+  z-index: 2000;
+  direction: rtl;
+}
+
+/* Close button (top right) */
+.closeButton {
+  position: absolute;
+  width: auto;
+  height: auto;
+  right: 1.5rem;
+  top: calc(3rem + env(safe-area-inset-top, 0));
+
+  border: none;
+  background: transparent;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  z-index: 1201;
+  padding: var(--spacing-xs);
+
+  transition: transform var(--transition-normal);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.closeButton:hover {
+  transform: scale(1.1);
+}
+
+.closeButton:active {
+  transform: scale(0.95);
+}
+
+/* Content wrapper */
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3.25rem; /* 52px - matches login page */
+  width: 100%;
+  max-width: 19.875rem; /* 318px */
+}
+
+/* Greeting section */
+.greeting {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.125rem; /* 2px - matches user home page */
+  width: 100%;
+}
+
+/* Headline - matches login page h1 */
+.headline {
+  width: 100%;
+  font-family: var(--font-primary); /* Arfilit */
+  font-weight: var(--font-weight-normal);
+  font-size: 2.25rem; /* 36px - matches login page */
+  line-height: 1.875rem; /* 30px - matches login page */
+  text-align: center;
+  color: var(--color-text-secondary); /* #F9F9F9 */
+  margin: 0;
+}
+
+/* Subtitle - matches login page p */
+.subtitle {
+  width: 100%;
+  font-family: var(--font-secondary);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-xl); /* 20px - matches login page */
+  line-height: 1.375rem; /* 22px - matches login page */
+  text-align: center;
+  color: var(--color-text-secondary); /* #F9F9F9 */
+  margin: 0;
+}
+
+/* Form section - wraps inputs and button */
+.formSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem; /* 16px gap between inputs and button */
+  width: 100%;
+}
+
+/* Inputs container */
+.inputsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+}
+
+
+/* ============================================
+   RESPONSIVE - Small height screens
+   ============================================ */
+@media (max-height: 670px) {
+  .content {
+    gap: 1.5rem;
+  }
+}
+
+/* ============================================
+   PWA STANDALONE MODE
+   ============================================ */
+@media (display-mode: standalone) {
+  .modalContainer {
+    padding-top: calc(1rem + env(safe-area-inset-top, 0));
+  }
+
+  .closeButton {
+    top: calc(2.5rem + env(safe-area-inset-top, 0));
+  }
+}

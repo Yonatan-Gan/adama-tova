@@ -1,0 +1,116 @@
+/* ============================================
+   PENDING APPROVAL PAGE
+   Updated to use OrganicCircles
+   ============================================ */
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.container {
+  position: relative;
+  width: 100%;
+  min-height: 100dvh; /* Use dvh only for PWA compatibility */
+
+  background: var(--color-background);
+  background-attachment: fixed;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+  padding-top: calc(
+    2rem + env(safe-area-inset-top, 0)
+  ); /* Safe area for notch */
+  padding-bottom: calc(2rem + env(safe-area-inset-bottom, 0));
+  overflow: hidden;
+
+  animation: fadeInUp 0.8s ease-out;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  width: 100%;
+  max-width: 19.9375rem; /* 319px */
+  position: relative;
+  z-index: 2;
+}
+
+/* ============================================
+   CONCENTRIC CIRCLES - REMOVED
+   Now using OrganicCircles component rendered in JSX
+   ============================================ */
+
+/* ============================================
+   MESSAGE BOX
+   ============================================ */
+.messageBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 13.5rem; /* 216px */
+  z-index: 3;
+}
+
+.mainText {
+  font-family: var(--font-primary); /* Arfilit */
+  font-style: normal;
+  font-weight: var(--font-weight-normal);
+  font-size: 1rem; /* 16px */
+  line-height: 1.5rem; /* 24px */
+  text-align: center;
+  color: #ffffff;
+  margin: 0;
+  direction: rtl;
+}
+
+.mainText span {
+  display: block;
+}
+
+/* ============================================
+   CONTACT TEXT - Hidden for now
+   ============================================ */
+.contactText {
+  display: none;
+}
+
+/* ============================================
+   BACK BUTTON WRAPPER - Fixed at bottom center
+   ============================================ */
+.backButtonWrapper {
+  position: fixed;
+  bottom: 3.1875rem; /* 51px */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (min-width: 48rem) {
+  .content {
+    max-width: 28rem;
+  }
+}
+
+/* ============================================
+   PWA STANDALONE MODE - iOS Home Screen App Fix
+   ============================================ */
+@media (display-mode: standalone) {
+  .container {
+    padding-top: calc(1rem + env(safe-area-inset-top, 0));
+  }
+}

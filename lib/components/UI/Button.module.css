@@ -1,0 +1,301 @@
+/* ============================================
+   BASE STYLES
+   ============================================ */
+.base {
+  /* Layout: This forces the button to wrap the text tightly */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  /* Sizing: Crucial settings for "Hug Contents" */
+  width: fit-content; /* Only as wide as the text + padding */
+  min-width: 0; /* Remove intrinsic minimums */
+  max-width: 100%; /* Prevent overflow */
+  flex: 0 0 auto; /* Prevent flex parents from stretching/shrinking it */
+
+  /* Spacing */
+  gap: var(--spacing-sm); /* 8px */
+  margin: 0;
+
+  /* Typography & Appearance */
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-secondary);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-xs);
+  text-decoration: none;
+  white-space: nowrap; /* Keep text on one line */
+  direction: rtl;
+
+  /* Animation */
+  transition: all var(--transition-normal);
+
+  /* Box Model */
+  box-sizing: border-box;
+}
+
+.base:active {
+  transform: scale(0.96);
+}
+
+/* ============================================
+   COLOR VARIANTS
+   ============================================ */
+.primary {
+  background: #b37eb3;
+  color: var(--color-text-secondary);
+}
+
+.secondary {
+  background: var(--button-bg-light);
+  border: 0.0625rem solid var(--color-purple);
+  color: var(--color-purple-text);
+}
+
+/* ============================================
+   SIZE VARIANTS (Controlled purely by padding)
+   ============================================ */
+
+/* L size: 44px height */
+.sizeL {
+  height: 3.5rem; /* 44px */
+  /* Side padding defines the breathing room, width is automatic */
+  padding: 0 2rem; /* 32px - wider buttons */
+  border-radius: 0.3125rem;
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
+}
+
+/* L-short size: 36px height */
+.sizeLshort {
+  height: 3rem; /* 36px */
+  padding: 0 1.25rem; /* 20px */
+  border-radius: 0.3125rem;
+  font-size: var(--font-size-xl);
+}
+
+/* ============================================
+   TERTIARY (Text Link)
+   ============================================ */
+.tertiary {
+  background: transparent;
+  padding: 0;
+  height: auto;
+  gap: var(--spacing-sm);
+  justify-content: flex-start;
+
+  /* ⭐ DEFAULT TERTIARY FONT SIZE & WEIGHT - Can be overridden */
+  font-size: var(--font-size-lg); /* Default: 1.125rem / 18px */
+  font-weight: var(--font-weight-normal); /* Default: 400 */
+  line-height: 1.2;
+}
+
+/* Tertiary Size Variants */
+.tertiarySmall {
+  font-size: var(--font-size-sm); /* 0.875rem / 14px */
+}
+
+.tertiaryBase {
+  font-size: var(--font-size-base); /* 1rem / 16px */
+}
+
+.tertiaryMedium {
+  font-size: var(--font-size-md); /* 1.0625rem / 17px */
+}
+
+.tertiaryLarge {
+  font-size: var(--font-size-lg); /* 1.125rem / 18px */
+}
+
+.tertiaryXLarge {
+  font-size: var(--font-size-xl); /* 1.25rem / 20px */
+}
+
+/* Tertiary Weight Variants */
+.tertiaryLight {
+  font-weight: var(--font-weight-light); /* 300 */
+}
+
+.tertiaryNormal {
+  font-weight: var(--font-weight-normal); /* 400 */
+}
+
+.tertiarySemibold {
+  font-weight: var(--font-weight-semibold); /* 600 */
+}
+
+.tertiaryBold {
+  font-weight: var(--font-weight-bold); /* 700 */
+}
+
+/* Color types for tertiary */
+.white {
+  color: var(--color-text-secondary);
+}
+.orange {
+  color: var(--button-text);
+}
+.delete {
+  color: rgba(167, 0, 0, 1);
+}
+.red {
+  color: var(--color-bordo);
+}
+
+.arrowWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.arrowIcon {
+  /* Inherits color from parent button via currentColor */
+  width: auto; /* 8px - adjust this value */
+  height: auto; /* 14px - adjust this value */
+  flex-shrink: 0;
+  transition: transform var(--transition-normal);
+  margin-top: 0.125rem;
+}
+
+/* Optional: Add hover effect for arrow */
+.tertiary:hover .arrowIcon {
+  transform: translateX(-2px); /* Moves left in RTL */
+}
+
+/* ============================================
+   CUSTOM VARIANTS
+   No fixed widths, only Padding + Height
+   ============================================ */
+
+.whatsapp {
+  height: 3rem; /* 36px */
+  padding: 0 1rem; /* 16px side padding */
+  background: var(--button-bg-light);
+  border: 0.0625rem solid var(--color-purple);
+  border-radius: var(--radius-sm);
+  color: var(--color-purple);
+}
+
+.whatsappIcon {
+  width: 0.875rem;
+  height: 0.875rem;
+  border: 0.09375rem solid var(--color-purple);
+  border-radius: 0.125rem;
+  flex-shrink: 0;
+}
+
+.waiting-list {
+  height: 3rem; /* 36px */
+  padding: 0 1rem; /* 16px side padding */
+  background: var(--color-purple);
+  border-radius: var(--radius-sm);
+  color: var(--color-text-secondary);
+}
+
+.clockIcon {
+  position: relative;
+  width: 1.25rem;
+  height: 1.25rem;
+  background: #f7e3d5;
+  border: 0.0375rem solid var(--button-text);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.clockInner {
+  position: absolute;
+  inset: 15%;
+  border: 0.0375rem solid var(--button-text);
+  border-radius: 50%;
+}
+
+.clockHandLong {
+  position: absolute;
+  left: 50%;
+  top: 25%;
+  width: 1px;
+  height: 25%;
+  background: var(--button-text);
+}
+
+.clockHandShort {
+  position: absolute;
+  left: 30%;
+  top: 50%;
+  width: 20%;
+  height: 1px;
+  background: var(--button-text);
+}
+
+.approve {
+  height: 2.5rem; /* 48px */
+  padding: 0 1rem; /* 24px side padding */
+  background: var(--button-text);
+  color: var(--color-text-secondary);
+  border-radius: var(--radius-xs);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+}
+
+.reject {
+  height: 2.5rem; /* 48px */
+  padding: 0 1rem; /* 24px side padding */
+  background: var(--button-bg-light);
+  border: 0.0625rem solid var(--button-text);
+  color: var(--button-text);
+  border-radius: var(--radius-xs);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+}
+
+.popup-primary {
+  height: 2.25rem; /* 36px */
+  padding: 0 1rem;
+  background: var(--button-text);
+  border: 0.0625rem solid var(--color-text-secondary);
+  color: var(--color-text-secondary);
+  border-radius: var(--radius-xs);
+}
+
+.popup-secondary {
+  height: 2.25rem; /* 36px */
+  padding: 0 1rem;
+  background: var(--button-bg-light);
+  color: var(--button-text);
+  border-radius: var(--radius-xs);
+}
+
+.label {
+  white-space: nowrap;
+}
+
+.startIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Optional: limit icon size if you pass large SVGs */
+  font-size: 1.25rem; /* 20px */
+  line-height: 0;
+}
+
+.login {
+  /* Override auto-width behavior */
+  width: 19.6875rem; /* 315px */
+  height: 3.375rem; /* 54px */
+
+  /* Layout & Spacing */
+  padding: 1rem 2rem; /* 16px top/bottom, 32px left/right */
+  gap: 0.5rem; /* 8px */
+
+  /* Appearance */
+  border-radius: 0.5625rem; /* 9px */
+  border: 0.0625rem solid transparent; /* 1px default width */
+
+  /* Default Colors (can be overridden by custom props) */
+  background: var(--bg-light);
+  color: var(--color-purple-text);
+
+  /* Ensure centering since width is fixed */
+  justify-content: center;
+}

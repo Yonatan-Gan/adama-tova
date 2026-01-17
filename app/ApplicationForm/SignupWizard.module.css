@@ -1,0 +1,1528 @@
+/* ============================================
+   SIGNUP WIZARD - Responsive Design
+   Works on all phone screens
+   ============================================ */
+
+/* Container - Full screen background like login page */
+.wizardContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0;
+  padding-top: calc(
+    3vh + env(safe-area-inset-top, 0)
+  ); /* Safe area for notch */
+  padding-bottom: calc(
+    4rem + env(safe-area-inset-bottom, 0)
+  ); /* Space for fixed navigation */
+
+  width: 100%;
+  min-height: 100dvh; /* Use dvh only for PWA compatibility */
+
+  background: var(--color-background);
+  background-attachment: fixed;
+
+  overflow-x: hidden;
+  overflow-y: visible;
+  direction: rtl;
+  position: relative;
+}
+
+/* Fixed Background Circles - stays in place during swipe */
+.backgroundCircles {
+  position: fixed;
+  top: calc(4vh + env(safe-area-inset-top, 0));
+  left: 0;
+  right: 0;
+  width: min(60.5vw, 14.92rem);
+  height: min(60.5vw, 15.13rem);
+  margin: 0 auto;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Spacer to maintain layout where circles used to be */
+.circleSpacer {
+  width: min(60.5vw, 14.92rem);
+  height: min(55vw, 14rem);
+  flex-shrink: 0;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+}
+
+/* Scroll Snap Container - horizontal scrolling */
+.scrollSnapContainer {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  flex: 1;
+  overflow-x: auto;
+  overflow-y: visible;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+}
+
+.scrollSnapContainer::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
+}
+
+/* Lock scrolling until validation passes */
+.scrollLocked {
+  overflow-x: hidden !important;
+  touch-action: pan-y;
+}
+
+/* Each slide takes full width */
+.scrollSnapSlide {
+  flex: 0 0 100%;
+  width: 100%;
+  min-width: 100%;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 1.5rem;
+  overflow: visible; /* Allow dropdowns to extend beyond */
+  position: relative; /* Positioning context for arrow */
+}
+
+/* Content wrapper */
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 100%;
+  flex: 1;
+  position: relative;
+  overflow: visible;
+}
+
+/* ============================================
+   HEADER SECTION
+   ============================================ */
+.headerSection {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: flex-start;
+  padding: 0;
+  gap: 0.25rem;
+  width: 100%;
+  max-width: 19.6875rem; /* 315px - matches input containers */
+  flex-shrink: 0;
+  height: auto;
+  margin-bottom: 1rem;
+}
+
+.stepTitle {
+  width: 100%;
+  margin: 0;
+
+  font-family: var(--font-primary);
+  font-style: normal;
+  font-weight: var(--font-weight-normal);
+  font-size: 1.5rem; /* 24px */
+  line-height: 1.4;
+  text-align: right;
+  letter-spacing: 0.02em;
+
+  color: #ffffff;
+}
+
+.optionalSubtitle {
+  width: 100%;
+  margin: 0;
+  margin-top: -0.25rem;
+  margin-bottom: -1.25rem; /* Doesn't push content down */
+  font-family: var(--font-secondary);
+  font-weight: var(--font-weight-light);
+  font-size: 1rem;
+  line-height: 1.1875rem;
+  text-align: right;
+  color: #ffffff;
+}
+
+/* ============================================
+   DECORATIVE CIRCLE - OrganicCircles Container
+   UPDATED: Increased size by 10% to prevent layer cutoff
+   ============================================ */
+.decorativeCircles {
+  width: min(
+    60.5vw,
+    14.92rem
+  ); /* +10% from 55vw/13.5625rem - ~239px max (was 217px) */
+  height: min(
+    60.5vw,
+    15.13rem
+  ); /* +10% from 55vw/13.75rem - ~242px max (was 220px) */
+  position: relative;
+  flex-shrink: 0;
+  margin-top: 3vh;
+  margin-bottom: 2vh;
+  pointer-events: none;
+  overflow: visible; /* Allow circles to extend slightly if needed */
+  z-index: 1;
+}
+
+.circlePlaceholder {
+  position: absolute;
+  left: 0%;
+  right: 4.86%;
+  top: 0%;
+  bottom: 4.79%;
+  border: 0.1445rem solid rgba(249, 249, 249, 0.45);
+  border-radius: 50%;
+  transform: matrix(1, -0.05, 0.05, 1, 0, 0);
+}
+
+/* ============================================
+   STEP CONTAINERS
+   ============================================ */
+.stepContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0;
+  gap: 1rem;
+  width: 100%;
+  max-width: 19.6875rem; /* 315px */
+  flex: 1;
+  margin-top: 1.5rem;
+  overflow: visible;
+}
+
+.stepContainerLower {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0;
+  gap: 1rem;
+  width: 100%;
+  max-width: 19.6875rem; /* 315px */
+  flex: 1;
+  margin-top: 1.5rem;
+}
+
+/* Space between header and inputs on Step 3 (circle selection) */
+.stepContainerLower .inputsContainer {
+  margin-top: 0;
+}
+
+/* ============================================
+   FORM INPUTS
+   ============================================ */
+.formContent {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0;
+  gap: 1rem;
+  width: 100%;
+}
+
+.inputsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  overflow: visible;
+}
+
+.inputWrapper {
+  position: relative;
+  width: 100%;
+  overflow: visible;
+}
+
+.input {
+  box-sizing: border-box;
+  width: 100%;
+  height: 3.75rem; /* 60px */
+  padding: 0.6875rem 1.875rem 0.6875rem 1.875rem; /* Vertically centered: 11px top/bottom, 30px sides */
+  background: transparent;
+  border: 0.0625rem solid #f9f9f9;
+  border-radius: 0.5625rem; /* 9px */
+
+  font-family: var(--font-secondary);
+  font-style: normal;
+  font-weight: var(--font-weight-light);
+  font-size: var(--font-size-md); /* 17px */
+  line-height: 1.0625rem; /* 17px */
+  text-align: right;
+
+  color: #f9f9f9;
+
+  direction: rtl;
+  outline: none;
+}
+
+.input::placeholder {
+  font-family: var(--font-secondary);
+  font-weight: var(--font-weight-light);
+  font-size: var(--font-size-md);
+  color: rgba(247, 247, 247, 0.7);
+}
+
+.input:focus {
+  border-color: #ffffff;
+}
+
+.inputLabel {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0.0625rem 0.5rem; /* 1px 8px */
+  gap: 0.5rem; /* 8px */
+  isolation: isolate;
+
+  position: absolute;
+  height: 0.875rem; /* 14px */
+  right: 1.9531rem; /* 31.25px */
+  top: -0.5rem; /* -8px */
+
+  /* Gradient that aligns with page - position set via JS (frozen during keyboard) */
+  background-image: linear-gradient(
+    180deg,
+    #e74e1c 0%,
+    #de6930 53%,
+    #e79267 87%
+  );
+  background-repeat: no-repeat;
+  background-size: 100% var(--vh, 100dvh);
+  background-position: 0 var(--bg-y, 0px);
+
+  font-family: var(--font-secondary);
+  font-style: normal;
+  font-weight: var(--font-weight-normal);
+  font-size: var(--font-size-md); /* 17px */
+  line-height: 1.1875rem; /* 19px */
+  text-align: right;
+
+  color: #f9f9f9;
+
+  pointer-events: none;
+  z-index: 1;
+}
+
+.inputError {
+  border: 0.125rem solid #A70000 !important;
+}
+
+/* Field error - replaces label */
+.fieldError {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0.0625rem 0.5rem; /* 1px 8px - same as label */
+  gap: 0.5rem; /* 8px */
+  isolation: isolate;
+
+  position: absolute;
+  height: 0.875rem; /* 14px */
+  right: 1.9531rem; /* Same as inputLabel */
+  top: -0.5rem;
+
+  /* Gradient that aligns with page - position set via JS (frozen during keyboard) */
+  background-image: linear-gradient(
+    180deg,
+    #e74e1c 0%,
+    #de6930 53%,
+    #e79267 87%
+  );
+  background-repeat: no-repeat;
+  background-size: 100% var(--vh, 100dvh);
+  background-position: 0 var(--bg-y, 0px);
+
+  font-family: var(--font-secondary);
+  font-size: var(--font-size-md); /* 17px - same as label */
+  font-weight: var(--font-weight-normal);
+  line-height: 1.1875rem; /* 19px */
+  text-align: right;
+  color: #A70000;
+
+  white-space: nowrap;
+  z-index: 3;
+}
+
+/* ============================================
+   GENDER SELECTOR / ACCORDION
+   ============================================ */
+.genderSelector {
+  width: 100%;
+  position: relative;
+  z-index: 60;
+}
+
+/* Wrapper for SVG border approach */
+.genderWrapper {
+  position: relative;
+  width: 100%;
+  height: 3.75rem; /* 60px - matches CutInput */
+}
+
+/* SVG border - stretched to fill wrapper */
+.genderBorder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.genderBorderPath {
+  stroke: var(--color-text-secondary); /* #F9F9F9 */
+  stroke-width: 1;
+}
+
+/* Label - positioned in the gap (no background needed) */
+.genderLabel {
+  position: absolute;
+  top: -0.5rem; /* -8px - sits on top of the border gap */
+  right: 2rem;
+
+  font-family: var(--font-secondary);
+  font-weight: var(--font-weight-normal);
+  font-size: var(--font-size-base); /* 16px */
+  line-height: 1.1875rem; /* 19px */
+  color: var(--color-text-secondary); /* #F9F9F9 */
+
+  padding: 0 0.25rem;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.genderToggle {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  padding: 0 1.875rem;
+  background: transparent;
+  border: none; /* No border - SVG handles it */
+  border-radius: 0.5625rem; /* 9px */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+
+  font-family: var(--font-secondary);
+  font-style: normal;
+  font-weight: var(--font-weight-light);
+  font-size: 1rem; /* 16px */
+  line-height: 1.0625rem; /* 17px */
+  text-align: right;
+
+  color: #f9f9f9;
+
+  direction: rtl;
+  cursor: pointer;
+  outline: none;
+}
+
+.genderToggle.open {
+  /* No border radius change needed - SVG handles it */
+}
+
+.accordionPlaceholder {
+  color: rgba(247, 247, 247, 0.7);
+}
+
+.genderToggleArrow {
+  /* Hide the text character */
+  font-size: 0;
+  color: transparent;
+
+  /* Container */
+  position: relative;
+  width: 1rem;
+  height: 0.5rem;
+  transform-origin: center center;
+
+  transition: transform 0.2s;
+}
+
+.genderToggleArrow::before,
+.genderToggleArrow::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 0.55rem;
+  height: 0.0625rem;
+  background: #f9f9f9;
+}
+
+.genderToggleArrow::before {
+  right: 50%;
+  transform: translateY(-50%) rotate(35deg);
+  transform-origin: right center;
+}
+
+.genderToggleArrow::after {
+  left: 50%;
+  transform: translateY(-50%) rotate(-35deg);
+  transform-origin: left center;
+}
+
+.genderToggleArrow.open {
+  transform: rotate(180deg);
+}
+
+.genderDropdown {
+  position: absolute;
+  top: 3.25rem; /* Overlap slightly with wrapper to connect borders */
+  left: 0;
+  right: 0;
+  background: #e26029; /* Solid orange like UnifiedDropdown */
+  border: 0.0625rem solid #f9f9f9;
+  border-top: 0.0625rem solid #f9f9f9; /* White border separating from toggle */
+  border-radius: 0 0 0.5625rem 0.5625rem;
+  padding-top: 0.5rem; /* Add padding to compensate for overlap */
+  z-index: 100;
+}
+
+.genderOption {
+  width: 100%;
+  padding: 0.875rem 1.875rem;
+  background: #e26029; /* Solid orange */
+  border: none;
+  border-bottom: 0.0625rem solid #f9f9f9;
+
+  font-family: var(--font-secondary);
+  font-style: normal;
+  font-weight: var(--font-weight-light);
+  font-size: 1rem;
+  line-height: 1.0625rem;
+  text-align: right;
+
+  color: #ffffff;
+
+  direction: rtl;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.genderOption:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.genderOption.selected {
+  background: rgba(255, 255, 255, 0.15);
+  font-weight: var(--font-weight-normal);
+}
+
+.genderOption:last-child {
+  border-bottom: none;
+}
+
+/* ============================================
+   ACCORDION (Circle selection)
+   ============================================ */
+.accordionContainer {
+  width: 100%;
+  position: relative;
+  z-index: 60; /* above arrow (50) so dropdown covers it */
+}
+
+.accordionHeader {
+  box-sizing: border-box;
+  width: 100%;
+  height: 3.75rem;
+  padding: 0 1.875rem;
+  background: transparent;
+  border: 0.0625rem solid #f9f9f9;
+  border-radius: 0.5625rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--font-secondary);
+  font-weight: var(--font-weight-light);
+  font-size: 1rem;
+  text-align: right;
+  color: #f9f9f9;
+  direction: rtl;
+  cursor: pointer;
+  transition: border-radius 0.2s;
+}
+
+.accordionHeader.open {
+  border-radius: 0.5625rem 0.5625rem 0 0;
+}
+
+/* Accordion arrow - identical to gender arrow */
+.accordionArrow {
+  /* Hide the text character */
+  font-size: 0;
+  color: transparent;
+
+  /* Container */
+  position: relative;
+  width: 1rem;
+  height: 0.5rem;
+  transform-origin: center center;
+
+  transition: transform 0.2s;
+}
+
+.accordionArrow::before,
+.accordionArrow::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 0.55rem;
+  height: 0.0625rem;
+  background: #f9f9f9;
+}
+
+.accordionArrow::before {
+  right: 50%;
+  transform: translateY(-50%) rotate(35deg);
+  transform-origin: right center;
+}
+
+.accordionArrow::after {
+  left: 50%;
+  transform: translateY(-50%) rotate(-35deg);
+  transform-origin: left center;
+}
+
+.accordionArrow.open {
+  transform: rotate(180deg);
+}
+
+.accordionDropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: #e26029; /* Solid orange like UnifiedDropdown */
+  border: 0.0625rem solid #f9f9f9;
+  border-top: 0.0625rem solid #f9f9f9; /* White border separating from header */
+  border-radius: 0 0 0.5625rem 0.5625rem;
+  z-index: 100;
+  max-height: min(11.5rem, 35vh); /* Shows exactly 4 options */
+  overflow-y: scroll;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
+.accordionOption {
+  width: 100%;
+  padding: 0.875rem 1.875rem;
+  background: #e26029; /* Solid orange */
+  border: none;
+  border-bottom: 0.0625rem solid #f9f9f9;
+
+  font-family: var(--font-secondary);
+  font-style: normal;
+  font-weight: var(--font-weight-light);
+  font-size: 1rem; /* 16px */
+  line-height: 1.0625rem; /* 17px */
+  text-align: right;
+
+  color: #ffffff;
+
+  direction: rtl;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.accordionOption:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.accordionOption.selected {
+  background: rgba(255, 255, 255, 0.15);
+  font-weight: var(--font-weight-normal);
+}
+
+.accordionOption:last-child {
+  border-bottom: none;
+}
+
+/* ============================================
+   OPTION BUTTONS (Branches, Interests)
+   ============================================ */
+.optionsContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0;
+  gap: 0.625rem; /* 10px - tighter spacing */
+  width: 19.6875rem; /* 315px */
+  max-width: 100%;
+  margin-top: 0; /* margin handled by stepContainerLower */
+}
+
+.optionButton {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem; /* 16px */
+  gap: 0.625rem; /* 10px */
+  margin: 0 auto;
+  width: 19.6875rem; /* 315px */
+  max-width: 100%;
+  height: 2.9375rem; /* 47px */
+  background: rgba(249, 249, 249, 0.3); /* Semi-transparent - unselected */
+  border-radius: 0.5625rem; /* 9px */
+  border: 1px solid #F9F9F9; /* White border */
+  font-family: var(--font-secondary);
+  font-weight: var(--font-weight-normal);
+  font-size: 1rem; /* 16px */
+  line-height: 1.1875rem; /* 19px */
+  text-align: right;
+  color: #F9F9F9; /* White text for unselected */
+  cursor: pointer;
+  transition: background 0.15s ease-out, border-color 0.15s ease-out;
+  -webkit-tap-highlight-color: transparent;
+  transform: translateZ(0); /* Force GPU acceleration */
+}
+
+.optionButton:hover {
+  opacity: 0.9;
+}
+
+.optionButton.selected {
+  background: #f9f9f9; /* White - selected */
+  border: none;
+  color: #681f02; /* DarkTypo */
+}
+
+/* ============================================
+   TEXTAREA
+   ============================================ */
+.textareaWrapper {
+  width: 100%;
+}
+
+.textarea {
+  box-sizing: border-box;
+  width: 100%;
+  height: 3.75rem;
+  padding: 1rem 1.875rem;
+  background: transparent;
+  border: 0.0625rem solid #f9f9f9;
+  border-radius: 0.5625rem;
+  font-family: var(--font-secondary);
+  font-weight: var(--font-weight-light);
+  font-size: 1rem;
+  text-align: right;
+  color: #f9f9f9;
+  direction: rtl;
+  resize: none;
+  outline: none;
+}
+
+.textarea:focus {
+  border-color: #ffffff;
+}
+
+/* Larger textarea for "אחר" field on Step 3 */
+.textareaLarge {
+  box-sizing: border-box;
+  width: 100%;
+  height: 7.125rem; /* 114px */
+  padding: 1rem 1.875rem;
+  background: transparent;
+  border: 0.0625rem solid #f9f9f9;
+  border-radius: 0.5625rem;
+  font-family: var(--font-secondary);
+  font-weight: var(--font-weight-light);
+  font-size: 1rem;
+  text-align: right;
+  color: #f9f9f9;
+  direction: rtl;
+  resize: none;
+  outline: none;
+}
+
+.textareaLarge:focus {
+  border-color: #ffffff;
+}
+
+/* Step 4 title - positioned above the textarea */
+.step4Title {
+  width: 100%;
+  margin: 0;
+  margin-top: -2rem; /* Pull content higher */
+  margin-bottom: 0.5rem;
+  font-family: var(--font-secondary);
+  font-weight: var(--font-weight-normal);
+  font-size: 1.25rem; /* 20px */
+  line-height: 1.25rem; /* 20px */
+  text-align: right;
+  color: #ffffff;
+}
+
+/* ============================================
+   NEXT ARROW - Left center of page (inside each slide)
+   ============================================ */
+.nextArrow {
+  position: absolute;
+  left: 2.5rem; /* aligned with text box left edge */
+  bottom: 9rem; /* below gender toggle - desktop */
+  width: 2.5625rem; /* 41px */
+  height: 2.5rem; /* 40px */
+  z-index: 50; /* below dropdowns so they cover it when open */
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  -webkit-tap-highlight-color: transparent;
+  opacity: 0;
+  transform: translateX(-1.25rem) translateZ(0);
+  -webkit-transform: translateX(-1.25rem) translateZ(0);
+  will-change: transform, opacity;
+}
+
+.nextArrow svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* Slide-in animation */
+.nextArrowVisible {
+  animation: arrowSlideIn 0.6s ease-out forwards;
+}
+
+@keyframes arrowSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateX(-1.25rem) translateZ(0);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) translateZ(0);
+  }
+}
+
+/* Slide-in + swipe hint animation for first page */
+.nextArrowSwipeHint {
+  animation: arrowSlideIn 0.6s ease-out forwards, arrowSwipeHint 1.2s ease-in-out 0.8s infinite;
+}
+
+@keyframes arrowSwipeHint {
+  0%, 100% {
+    transform: translateX(0) translateZ(0);
+  }
+  30% {
+    transform: translateX(0.5rem) translateZ(0);
+  }
+  60% {
+    transform: translateX(-0.1875rem) translateZ(0);
+  }
+}
+
+/* Hidden state */
+.nextArrowHidden {
+  opacity: 0;
+  transform: translateX(-1.25rem) translateZ(0);
+}
+
+/* ============================================
+   NAVIGATION (Progress dots)
+   ============================================ */
+.navigation {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  gap: 0.5rem; /* 8px */
+
+  width: 100%;
+  position: fixed;
+  bottom: 2rem;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: transparent;
+  pointer-events: none;
+}
+
+.navButtons {
+  display: none;
+}
+
+.navButton {
+  display: none;
+}
+
+.progressDots {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  gap: 0.5rem; /* 8px */
+}
+
+/* Progress circle container */
+.progressCircle {
+  width: 1.0625rem; /* ~17px */
+  height: 1.0625rem; /* ~17px */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  flex-grow: 0;
+  transition: all 0.3s;
+}
+
+/* Progress circle icon (SVG) */
+.progressCircleIcon {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* ============================================
+   SUBMIT BUTTON
+   ============================================ */
+.submitButton {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem; /* 8px */
+  gap: 0.5rem;
+  width: 2.875rem; /* 46px */
+  height: 2.25rem; /* 36px */
+  background: #b37eb3;
+  border-radius: 0.25rem; /* 4px */
+  border: none;
+  font-family: var(--font-secondary);
+  font-weight: var(--font-weight-normal);
+  font-size: 1.125rem; /* 18px */
+  line-height: 1.25rem; /* 20px */
+  color: #f9f9f9;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  align-self: center; /* Center the button */
+}
+
+.submitButton:hover {
+  opacity: 0.9;
+}
+
+.submitButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ============================================
+   LAST STEP (Free text - no circle)
+   ============================================ */
+.lastStepContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  width: 100%;
+  padding-top: 10vh;
+}
+
+.lastStepContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  max-width: 19.6875rem;
+}
+
+.lastStepTitle {
+  width: 100%;
+  margin: 0;
+  font-family: var(--font-secondary); /* Ezer Shemesh - matches Figma */
+  font-weight: var(--font-weight-normal);
+  font-size: 1.25rem; /* 20px - matches Figma */
+  line-height: 1.25rem; /* 20px */
+  text-align: right;
+  color: #ffffff;
+  margin-bottom: 0rem;
+}
+
+/* ============================================
+   ERROR MESSAGE
+   ============================================ */
+.error {
+  width: 100%;
+  padding: 0.75rem;
+  background: rgba(255, 0, 0, 0.15);
+  border: 0.0625rem solid #ff0000;
+  border-radius: 0.5625rem;
+  font-family: var(--font-secondary);
+  font-size: 0.875rem;
+  color: #ff0000;
+  text-align: center;
+  direction: rtl;
+}
+
+/* ============================================
+   APPROVAL PAGE
+   ============================================ */
+.approvalContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100dvh; /* Use dvh for PWA compatibility */
+  width: 100%;
+  padding-top: env(safe-area-inset-top, 0); /* Safe area for notch */
+  padding-bottom: env(safe-area-inset-bottom, 0);
+  background: var(--color-background);
+  background-attachment: fixed;
+  position: relative;
+}
+
+.approvalCircles {
+  position: absolute;
+  width: 40.5625rem;
+  height: 40.6619rem;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.approvalRing {
+  position: absolute;
+  border-radius: 50%;
+}
+
+.approvalMessage {
+  width: 11.4375rem;
+  font-family: var(--font-secondary);
+  font-weight: var(--font-weight-normal);
+  font-size: 1.25rem;
+  line-height: 1.375rem;
+  text-align: center;
+  color: #ffffff;
+  z-index: 1;
+}
+
+.backLink {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0;
+  gap: 0.5rem;
+  position: absolute;
+  left: 1.5rem;
+  bottom: 2.9688rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.backLinkArrow {
+  display: flex;
+  align-items: center;
+  padding: 0.1875rem 0.375rem 0.3125rem;
+  width: 1rem;
+  height: 1.1538rem;
+  transform: rotate(180deg);
+}
+
+.backLinkArrowIcon {
+  width: 0.6538rem;
+  height: 0.2456rem;
+  border: 0.0625rem solid #f9f9f9;
+  border-top: none;
+  border-right: none;
+  transform: rotate(-45deg);
+}
+
+.backLinkText {
+  font-family: var(--font-secondary);
+  font-weight: var(--font-weight-normal);
+  font-size: 1rem;
+  line-height: 1.1875rem;
+  color: #f9f9f9;
+}
+
+/* ============================================
+   AUTOFILL FIX
+   ============================================ */
+.input:-webkit-autofill,
+.input:-webkit-autofill:hover,
+.input:-webkit-autofill:focus,
+.input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 1000px transparent inset !important;
+  -webkit-text-fill-color: #f9f9f9 !important;
+  border: 0.0625rem solid #f9f9f9 !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+/* ============================================
+   RESPONSIVE - Works on all phone screens
+   ============================================ */
+
+/* Medium-small height screens (Galaxy S8+ ~740px) - lift circles more */
+@media (min-height: 700px) and (max-height: 760px) {
+  .decorativeCircles {
+    margin-top: -2.5vh;
+    margin-bottom: -1vh;
+  }
+
+  .circleSpacer {
+    margin-top: 0;
+    margin-bottom: 1rem;
+  }
+
+  .backgroundCircles {
+    top: calc(3vh + env(safe-area-inset-top, 0));
+  }
+}
+
+/* Small height screens - reduce spacing and sizes */
+@media (max-height: 700px) {
+  .wizardContainer {
+    padding-top: 2vh;
+    padding-bottom: calc(6rem + env(safe-area-inset-bottom, 0)); /* More room for dropdowns */
+  }
+
+  .headerSection {
+    height: auto;
+  }
+
+  .decorativeCircles {
+    width: min(45vw, 10rem);
+    height: min(45vw, 10rem);
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+  }
+
+  .circleSpacer {
+    width: min(45vw, 10rem);
+    height: min(45vw, 10rem);
+    margin-top: 0;
+    margin-bottom: 1rem;
+  }
+
+  .backgroundCircles {
+    top: calc(2vh + env(safe-area-inset-top, 0));
+    width: min(45vw, 10rem);
+    height: min(45vw, 10rem);
+  }
+
+  .input,
+  .genderWrapper,
+  .accordionHeader {
+    height: 3.25rem;
+  }
+
+  .genderDropdown {
+    top: 2.75rem; /* Overlap for 3.25rem wrapper */
+  }
+
+  .genderOption,
+  .accordionOption {
+    padding: 0.625rem 1.5rem;
+  }
+
+  .optionButton {
+    height: 2.5rem;
+    padding: 0.75rem;
+  }
+
+  .navigation {
+    padding-top: 1.5rem;
+    padding-bottom: calc(1.5rem + env(safe-area-inset-bottom, 0));
+  }
+
+  .stepContainer {
+    padding-bottom: 8rem; /* Extra space for gender dropdown */
+  }
+}
+
+/* Very small height screens */
+@media (max-height: 600px) {
+  .wizardContainer {
+    padding-top: 1vh;
+  }
+
+  .headerSection {
+    height: auto;
+  }
+
+  .decorativeCircles {
+    width: min(35vw, 7rem);
+    height: min(35vw, 7rem);
+    margin-top: 1.5vh;
+    margin-bottom: 1.5vh;
+  }
+
+  .circleSpacer {
+    width: min(35vw, 7rem);
+    height: min(35vw, 7rem);
+    margin-top: 0;
+    margin-bottom: 0.75rem;
+  }
+
+  .backgroundCircles {
+    top: calc(1vh + env(safe-area-inset-top, 0));
+    width: min(35vw, 7rem);
+    height: min(35vw, 7rem);
+  }
+
+  .stepTitle {
+    font-size: 1.25rem;
+  }
+
+  .input,
+  .genderWrapper,
+  .accordionHeader {
+    height: 2.75rem;
+  }
+
+  .genderDropdown {
+    top: 2.25rem; /* Overlap for 2.75rem wrapper */
+  }
+
+  .genderOption,
+  .accordionOption {
+    padding: 0.5rem 1.25rem;
+  }
+
+  .optionButton {
+    height: 2.25rem;
+    padding: 0.5rem;
+  }
+
+  .navigation {
+    padding-top: 1rem;
+    padding-bottom: calc(1rem + env(safe-area-inset-bottom, 0));
+  }
+
+  .lastStepContainer {
+    margin-top: 10%;
+  }
+}
+
+/* Landscape or very short screens */
+@media (max-height: 500px) {
+  .headerSection {
+    height: auto;
+  }
+
+  .decorativeCircles {
+    width: min(25vw, 5rem);
+    height: min(25vw, 5rem);
+    margin-top: 1vh;
+    margin-bottom: 1vh;
+  }
+
+  .circleSpacer {
+    width: min(25vw, 5rem);
+    height: min(25vw, 5rem);
+    margin-top: 0;
+    margin-bottom: 1rem;
+  }
+
+  .backgroundCircles {
+    top: calc(1vh + env(safe-area-inset-top, 0));
+    width: min(25vw, 5rem);
+    height: min(25vw, 5rem);
+  }
+
+  .input,
+  .genderWrapper,
+  .accordionHeader {
+    height: 2.5rem;
+  }
+
+  .genderDropdown {
+    top: 2rem; /* Overlap for 2.5rem wrapper */
+  }
+
+  .stepContainer,
+  .stepContainerLower {
+    gap: 0.75rem;
+  }
+}
+
+/* Medium height screens (700-800px) - like Galaxy S8+ */
+/* stepContainer uses base margin-top to match optionsContainer */
+
+/* ============================================
+   RESPONSIVE - Taller phones (iPhone 12 Pro, etc.)
+   ============================================ */
+
+/* Taller screens (800px+) */
+@media (min-height: 800px) {
+  .wizardContainer {
+    padding-top: 3vh;
+  }
+
+  .decorativeCircles {
+    margin-top: 3vh;
+    margin-bottom: 2vh;
+  }
+
+  .circleSpacer {
+    margin-top: 0;
+    margin-bottom: 2rem;
+  }
+
+  .backgroundCircles {
+    top: calc(5vh + env(safe-area-inset-top, 0));
+  }
+
+  .stepContainer {
+    margin-top: 1.5rem;
+  }
+
+  .optionsContainer {
+    margin-top: 0;
+  }
+}
+
+/* Very tall screens (900px+) */
+@media (min-height: 900px) {
+  .wizardContainer {
+    padding-top: 4vh;
+  }
+
+  .decorativeCircles {
+    margin-top: 4vh;
+  }
+
+  .circleSpacer {
+    margin-top: 0;
+    margin-bottom: 2.5rem;
+  }
+
+  .backgroundCircles {
+    top: calc(6vh + env(safe-area-inset-top, 0));
+  }
+
+  .stepContainer {
+    margin-top: 1.5rem;
+  }
+
+  .optionsContainer {
+    margin-top: 0;
+  }
+}
+
+/* ============================================
+   RESPONSIVE - Tablet and Desktop (width-based)
+   ============================================ */
+
+/* Tablet */
+@media (min-width: 48rem) {
+  .content {
+    max-width: 22rem;
+  }
+
+  .headerSection {
+    max-width: 19.6875rem; /* Keep aligned with inputs */
+  }
+
+  /* Make dots more visible on larger screens */
+  .dot {
+    width: 1rem;
+    height: 0.9rem;
+    border-width: 0.125rem;
+  }
+}
+
+/* Desktop */
+@media (min-width: 64rem) {
+  .content {
+    max-width: 24rem;
+  }
+
+  .headerSection {
+    max-width: 19.6875rem; /* Keep aligned with inputs */
+  }
+
+  /* Ensure dots are visible on desktop */
+  .dot {
+    width: 1.1rem;
+    height: 1rem;
+    border-width: 0.125rem;
+  }
+
+  .navigation {
+    padding-bottom: 2.5rem;
+  }
+}
+
+/* ============================================
+   PWA STANDALONE MODE - iOS Home Screen App Fix
+   ============================================ */
+@media (display-mode: standalone) {
+  .wizardContainer {
+    padding-top: calc(1vh + env(safe-area-inset-top, 0)); /* Reduced to move content up */
+    padding-bottom: calc(5rem + env(safe-area-inset-bottom, 0));
+    overflow: visible;
+  }
+
+  .scrollSnapContainer {
+    overflow-x: auto;
+    overflow-y: visible;
+  }
+
+  .headerSection {
+    height: auto;
+  }
+
+  .decorativeCircles {
+    margin-top: 1vh;
+    margin-bottom: 1vh;
+  }
+
+  .circleSpacer {
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+  }
+
+  .backgroundCircles {
+    top: calc(3vh + env(safe-area-inset-top, 0));
+  }
+
+  .content {
+    overflow: visible;
+  }
+
+  .stepContainer {
+    margin-top: 1.5rem;
+    padding-bottom: 6rem;
+    overflow: visible !important;
+  }
+
+  .optionsContainer {
+    margin-top: 0;
+  }
+
+  .stepContainerLower .inputsContainer {
+    margin-top: 0;
+  }
+
+  .scrollSnapSlide {
+    overflow: visible !important;
+  }
+
+  .inputsContainer {
+    overflow: visible !important;
+  }
+
+  .inputWrapper {
+    overflow: visible !important;
+  }
+
+  .genderSelector {
+    z-index: 100;
+    overflow: visible !important;
+  }
+
+  .genderDropdown {
+    z-index: 200;
+  }
+
+  .navigation {
+    padding-bottom: calc(1.5rem + env(safe-area-inset-bottom, 0));
+  }
+}
+
+/* PWA on taller phones */
+@media (display-mode: standalone) and (min-height: 800px) {
+  .wizardContainer {
+    padding-top: calc(2vh + env(safe-area-inset-top, 0));
+    padding-bottom: calc(5rem + env(safe-area-inset-bottom, 0));
+  }
+
+  .headerSection {
+    height: auto;
+  }
+
+  .decorativeCircles {
+    margin-top: 2vh;
+    margin-bottom: 1.5vh;
+  }
+
+  .circleSpacer {
+    margin-top: 0;
+    margin-bottom: 2rem;
+  }
+
+  .backgroundCircles {
+    top: calc(4vh + env(safe-area-inset-top, 0));
+  }
+
+  .stepContainer {
+    margin-top: 1.5rem;
+    padding-bottom: 6rem;
+  }
+
+  .optionsContainer {
+    margin-top: 0;
+  }
+}
+
+/* ============================================
+   PWA VIEWPORT HEIGHTS - Arrow & content fix
+   ============================================ */
+/* iPhone X/XS/11 Pro/12 mini PWA viewport (768px height) */
+@media (min-height: 760px) and (max-height: 780px) {
+  .nextArrow {
+    bottom: 7rem; /* below gender toggle on smaller phones */
+  }
+
+  .circleSpacer {
+    height: min(50vw, 12.5rem);
+    margin-bottom: 1rem;
+  }
+}
+
+/* iPhone 12/13/14 PWA viewport (797px height) */
+@media (min-height: 790px) and (max-height: 810px) {
+  .nextArrow {
+    bottom: 8rem; /* below gender toggle */
+  }
+
+  .circleSpacer {
+    height: min(52vw, 13rem);
+    margin-bottom: 1rem;
+  }
+}
+
+/* iPhone 16/16 Pro PWA viewport (~824px height) */
+@media (min-height: 815px) and (max-height: 840px) {
+  .nextArrow {
+    bottom: 5.5rem; /* below gender toggle */
+  }
+
+  .circleSpacer {
+    height: min(53vw, 13.25rem);
+    margin-bottom: 1rem;
+  }
+}
+
+/* iPhone 14/15 Plus/Pro Max PWA viewport (873px height) */
+@media (min-height: 865px) and (max-height: 885px) {
+  .nextArrow {
+    bottom: 9rem; /* below gender toggle on larger phones */
+  }
+
+  .circleSpacer {
+    height: min(54vw, 13.5rem);
+    margin-bottom: 1.25rem;
+  }
+}

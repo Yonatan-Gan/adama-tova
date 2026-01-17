@@ -1,0 +1,175 @@
+/* AdminNotificationsPage.module.css */
+
+.pageContainer {
+  width: 100%;
+  max-width: var(--container-max-width, 24.5rem);
+
+  /* --- FIX: OVERRIDE GLOBAL SCROLL LOCK --- */
+  /* instead of letting the div grow (min-height), we fix it to viewport height */
+  height: calc(100dvh - 4.5rem);
+  /* ...and enable scrolling INSIDE this container */
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch; /* Smooth scroll for iOS */
+  /* ---------------------------------------- */
+
+  margin: 0 auto;
+
+  /* Admin Orange Gradient */
+  background: linear-gradient(180deg, #e74e1c 0%, #de6930 53%, #e79267 87%);
+
+  position: relative;
+  direction: rtl;
+  padding: 1.5rem;
+}
+
+/* ============================================
+   TITLE
+   ============================================ */
+.titleContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: var(--spacing-3xl, 2rem);
+  margin-top: var(--spacing-4xl, 3rem);
+  width: 100%;
+  flex-shrink: 0;
+}
+
+.title {
+  font-family: var(--font-primary, sans-serif);
+  font-weight: 400;
+  font-size: 2rem;
+  line-height: 2.125rem;
+  text-align: center;
+  color: #f9f9f9;
+  margin: 0;
+}
+
+/* ============================================
+   FILTER
+   ============================================ */
+.filterContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 1rem;
+  flex-shrink: 0;
+}
+
+/* ============================================
+   ACTIONS (Mark All as Read)
+   ============================================ */
+.actionsContainer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  width: 100%;
+  flex-shrink: 0;
+}
+
+/* ============================================
+   CONTENT FRAME
+   ============================================ */
+.contentContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* Ensure no overflow restrictions here so padding works */
+}
+
+/* ============================================
+   LIST
+   ============================================ */
+.notificationsList {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  /* Ensure content is visible */
+  overflow: visible;
+
+  /* Cushion for the sticky button */
+  padding-bottom: 5rem;
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
+}
+
+.notificationItem {
+  width: 100%;
+  flex-shrink: 0;
+  overflow: visible;
+}
+
+/* ============================================
+   EMPTY STATE
+   ============================================ */
+.emptyWrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding-top: 2rem;
+}
+
+.emptyStateContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  gap: 1rem;
+  width: 100%;
+  border: 1px solid #f9f9f9;
+  border-radius: 11px;
+}
+
+.emptyStateContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.emptyStateIcon {
+  width: 3rem;
+  height: 3rem;
+}
+
+.emptyStateText {
+  font-family: var(--font-secondary, sans-serif);
+  font-size: 1.25rem;
+  color: #f9f9f9;
+  text-align: center;
+}
+
+/* ============================================
+   BOTTOM BUTTON
+   ============================================ */
+.bottomButton {
+  position: fixed;
+  bottom: 6rem;
+  right: 1.25rem;
+  z-index: 50;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 24.5rem) {
+  .pageContainer {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+@media (max-height: 43.75rem) {
+  .pageContainer {
+    padding-top: 4rem;
+  }
+  .bottomButton {
+    bottom: 5rem;
+  }
+}

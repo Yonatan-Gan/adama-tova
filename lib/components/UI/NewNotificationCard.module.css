@@ -1,0 +1,265 @@
+/* Container - Holds the static Glass Background */
+.container {
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 21.5625rem; /* ~345px */
+
+  min-height: 6rem; /* 125px */
+  height: auto;
+
+  /* --- GLASS EFFECT --- */
+  background: rgba(104, 31, 2, 0.05);
+  backdrop-filter: var(--blur-md); /* 10px Blur */
+  -webkit-backdrop-filter: var(--blur-md);
+
+  /* Outer border always visible on container */
+  border: 0.0625rem solid var(--color-text-secondary);
+  border-radius: var(--radius-sm);
+
+  user-select: none;
+  direction: rtl;
+
+  display: flex;
+  align-items: stretch;
+
+  overflow: hidden;
+}
+
+/* --- SWIPE MASK --- */
+.revealMask {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  height: 100%;
+
+  z-index: 1;
+  overflow: hidden;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  transition: none;
+  will-change: width;
+}
+
+.peek .revealMask {
+  transition: width 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* --- SWIPE ACTION BOX --- */
+.swipeActionBox {
+  width: 7.5rem;
+  height: 100%;
+
+  box-sizing: border-box;
+  border: none;
+  border-radius: 0;
+  margin: 0;
+
+  background: rgba(179, 126, 179, 0.5);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacing-xs);
+  flex-shrink: 0;
+}
+
+.swipeText {
+  font-family: var(--font-secondary);
+  font-size: var(--font-size-lg);
+  color: var(--color-text-secondary);
+  font-weight: var(--font-weight-normal);
+  text-align: center;
+  line-height: var(--line-height-tight);
+}
+
+.swipeArrow {
+  margin-top: 0.5rem;
+  font-size: var(--font-size-2xl);
+  color: var(--color-text-secondary);
+  font-weight: var(--font-weight-bold);
+  line-height: 1;
+}
+
+/* --- DELETE SWIPE MASK (Left side) --- */
+.deleteRevealMask {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  height: 100%;
+
+  z-index: 1;
+  overflow: hidden;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  transition: none;
+  will-change: width;
+}
+
+.peek .deleteRevealMask {
+  transition: width 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* --- DELETE ACTION BOX --- */
+.deleteActionBox {
+  width: 7.5rem;
+  height: 100%;
+
+  box-sizing: border-box;
+  border: none;
+  border-radius: 0;
+  margin: 0;
+
+  background: rgba(167, 0, 0, 0.7);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacing-xs);
+  flex-shrink: 0;
+}
+
+.deleteText {
+  font-family: var(--font-secondary);
+  font-size: var(--font-size-lg);
+  color: var(--color-text-secondary);
+  font-weight: var(--font-weight-normal);
+  text-align: center;
+  line-height: var(--line-height-tight);
+}
+
+.deleteArrow {
+  margin-top: 0.5rem;
+  font-size: var(--font-size-2xl);
+  color: var(--color-text-secondary);
+  font-weight: var(--font-weight-bold);
+  line-height: 1;
+}
+
+/* --- FOREGROUND CONTENT (Sliding Layer) --- */
+.card {
+  position: relative;
+  z-index: 2;
+  box-sizing: border-box;
+
+  flex-grow: 1;
+  width: 100%;
+  min-height: 6.5rem;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  padding: var(--spacing-lg);
+  gap: var(--spacing-md);
+
+  background: transparent;
+
+  border: none;
+  border-radius: var(--radius-sm);
+  box-shadow: none;
+
+  transition: transform var(--transition-fast);
+  touch-action: pan-y;
+  will-change: transform;
+}
+
+.peek .card.hintAnimating {
+  transition: transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.card.dragging {
+  transition: none !important;
+}
+
+/* Divider lines */
+.card.showRightDivider {
+  box-shadow: inset -1px 0 0 var(--color-text-secondary);
+}
+
+.card.showLeftDivider {
+  box-shadow: inset 1px 0 0 var(--color-text-secondary);
+}
+
+/* HEADER */
+.header {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: var(--spacing-md);
+  max-height: 3em;
+  overflow: hidden;
+}
+
+.headerTextGroup {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--spacing-xs);
+}
+
+.time,
+.pipe,
+.title {
+  font-family: var(--font-secondary);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-xl);
+  line-height: 1.25rem;
+  text-align: right;
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+}
+
+.pipe {
+  margin: 0 var(--spacing-xs);
+}
+
+.unreadDot {
+  width: 0.6875rem;
+  height: 0.6875rem;
+  background: var(--color-bordo);
+  border-radius: var(--radius-full);
+  flex: none;
+  order: -1;
+  box-shadow: var(--shadow-sm);
+  margin-top: 0.4rem;
+}
+
+.readText {
+  font-weight: 400 !important; /* Forces normal weight when read */
+}
+
+/* CONTENT CONTAINER */
+.messageContent {
+  width: 70%;
+  font-family: var(--font-secondary);
+  font-weight: var(--font-weight-normal);
+  font-size: var(--font-size-md);
+  line-height: 1.3rem;
+  text-align: right;
+  color: var(--color-text-secondary);
+  word-wrap: break-word;
+
+  gap: 0.25rem;
+}
+
+/* BUTTON POSITIONING */
+.buttonPositioner {
+  position: absolute;
+  bottom: 0.85rem;
+  left: var(--spacing-lg);
+  z-index: 3;
+}
